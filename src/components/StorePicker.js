@@ -7,7 +7,9 @@ export default class StorePicker extends Component {
                 <form className="store-selector">
                     <h2>Please enter your order name</h2>   
                     <input type="text" required placeholder='Store name'></input>
-                    <button type="submit">Visit store ⮕</button>
+                    <button type="submit">
+                        Visit store ⮕
+                    </button>
                 </form>
             </Fragment>   
         )
