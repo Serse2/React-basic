@@ -6,6 +6,16 @@ import Plate from './Plate'
 import fishes from '../sample-fishes'
 
 export default class App extends Component {
+    //set the state
+    state = {
+        fishes: {},
+    }
+
+    //funzione di update da passare tramite props da App a AddFishForm
+    addFish = (fish) =>{
+        console.log('add the fish ')
+    }
+
     render() {
         return (
             <div className="catch-of-the-day">
@@ -23,7 +33,7 @@ export default class App extends Component {
                     )}
                 </div> 
                 <Order />
-                <Inventory />
+                <Inventory addFish={this.addFish}/>
             </div>
         )
     }
