@@ -24,6 +24,8 @@ export default class AddFishForm extends Component {
         //richiamare la funzione addFish passata dal componente App tramite props
         this.props.addFish(fish)
 
+        //reset the input box after the submitting
+        e.currentTarget.reset()
     }
     
     
