@@ -5,11 +5,11 @@ export default class Plate extends Component {
     render() {
         return (
             <div className="menu-fish">
-                <img src={this.props.image} alt={this.props.name}/>
-                <h3 className="fish-name">{this.props.name}
-                    <span className="price">{formatPrice(this.props.price)}</span>
+                <img src={this.props.details.image} alt={this.props.details.name}/>
+                <h3 className="fish-name">{this.props.details.name}
+                    <span className="price">{formatPrice(this.props.details.price)}</span>
                 </h3>
-                <p>{this.props.desc}</p>
+                <p>{this.props.details.desc}</p>
                 {/* <div>Status: {this.props.status}</div> */}
             </div>
         )

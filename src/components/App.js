@@ -6,10 +6,9 @@ import Plate from './Plate'
 import sampleFishes from '../sample-fishes'
 
 export default class App extends Component {
-    //set the state
+    // the state
     state = {
-        fishes: {
-        },
+        fishes: {},
         menu:{}
     }
 
@@ -51,20 +50,17 @@ export default class App extends Component {
                 <div className="menu">
                     <Header />
                     <ul className="fishes">
-                        {Object.entries(this.state.fishes).map((fish, index) => (
+                        {Object.keys(this.state.fishes).map(key => (
                             <Plate 
-                                key={index}
-                                name={fish[1].name} 
-                                image={fish[1].image}
-                                desc={fish[1].desc}
-                                price={fish[1].price}
-                                status={fish[1].status}
+                                key={key}
+                                details={this.state.fishes[key]}
                             />)
                         )}
                     </ul>
                 </div> 
                 <Order />
                 <Inventory 
+                    // passo tramite props le funzioni per renderle accessibili ai livelli di componenti più bassi
                     addFish={this.addFish}
                     loadSampleFishes={this.loadSampleFishes}
                     cancelFishes={this.cancelFishes}
