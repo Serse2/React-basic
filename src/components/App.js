@@ -9,7 +9,7 @@ export default class App extends Component {
     // the state
     state = {
         fishes: {},
-        menu:{}
+        order:{}
     }
 
     //funzione di update da passare tramite props da App a AddFishForm
@@ -29,6 +29,22 @@ export default class App extends Component {
 
         console.log('add the fish ')
     }
+
+    addToOrder = (key) => {
+        console.log(key)
+        //fare copia della stato da modificare
+        let order = {...this.state.order}
+        //aggiungendo il fish selezionato o incrementando il valore se già presente
+        order[key] = order[key] + 1 || 1
+        console.log(order)
+        //modificare lo stato
+        this.setState({
+            order: order
+        })
+        
+    }
+
+
 
     //caricamento fishes già presenti 
     loadSampleFishes = () => {
@@ -53,7 +69,9 @@ export default class App extends Component {
                         {Object.keys(this.state.fishes).map(key => (
                             <Plate 
                                 key={key}
+                                index={key}
                                 details={this.state.fishes[key]}
+                                addToOrder={this.addToOrder}
                             />)
                         )}
                     </ul>
