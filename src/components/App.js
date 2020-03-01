@@ -31,17 +31,15 @@ export default class App extends Component {
     }
 
     addToOrder = (key) => {
-        console.log(key)
         //fare copia della stato da modificare
         let order = {...this.state.order}
         //aggiungendo il fish selezionato o incrementando il valore se già presente
         order[key] = order[key] + 1 || 1
-        console.log(order)
         //modificare lo stato
         this.setState({
             order: order
         })
-        
+
     }
 
 
@@ -76,7 +74,10 @@ export default class App extends Component {
                         )}
                     </ul>
                 </div> 
-                <Order />
+                <Order 
+                    fishes={this.state.fishes}
+                    order={this.state.order}
+                />
                 <Inventory 
                     // passo tramite props le funzioni per renderle accessibili ai livelli di componenti più bassi
                     addFish={this.addFish}
