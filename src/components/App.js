@@ -4,6 +4,7 @@ import Inventory from './Inventory';
 import Order from './Order';
 import Plate from './Plate'
 import sampleFishes from '../sample-fishes'
+import base from '../base'
 
 export default class App extends Component {
     // the state
@@ -11,6 +12,24 @@ export default class App extends Component {
         fishes: {},
         order:{}
     }
+
+
+    //lifecycle of React
+
+
+    componentDidMount(){
+        let { params } = this.props.match
+        this.ref = base.syncState(`${params.storeId}/fishes`, {
+            context: this,
+            state: 'fishes'
+        })
+    }
+
+    componentWillUnmount(){
+        base.removeBinding(this.ref)
+    }
+
+    //CUSTOM METHOD
 
     //funzione di update da passare tramite props da App a AddFishForm
     addFish = (fish) =>{
@@ -30,6 +49,7 @@ export default class App extends Component {
         console.log('add the fish ')
     }
 
+    //aggiungo singolo fish all'ordine
     addToOrder = (key) => {
         //fare copia della stato da modificare
         let order = {...this.state.order}
@@ -42,7 +62,17 @@ export default class App extends Component {
 
     }
 
-
+    //cancello singolo item nel componente in ordine
+    cancelItem = (key) => {
+        //fare copia della stato da modificare
+        let order = {...this.state.order}
+        //decremento il fish selezionato e verifico che una volta arrivato a 0 non vada a -1
+        order[key] = order[key] > 0 ? order[key] -1 : order[key] = 0
+        //modificare lo stato
+        this.setState({
+            order: order
+        })
+    }
 
     //caricamento fishes già presenti 
     loadSampleFishes = () => {
@@ -57,6 +87,8 @@ export default class App extends Component {
             fishes: {}
         })
     }
+
+    
 
     render() {
         return (
@@ -77,6 +109,7 @@ export default class App extends Component {
                 <Order 
                     fishes={this.state.fishes}
                     order={this.state.order}
+                    cancelItem={this.cancelItem}
                 />
                 <Inventory 
                     // passo tramite props le funzioni per renderle accessibili ai livelli di componenti più bassi
