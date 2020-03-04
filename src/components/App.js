@@ -10,7 +10,7 @@ export default class App extends Component {
     // the state
     state = {
         fishes: {},
-        order:{}
+        order: {}
     }
 
 
@@ -23,14 +23,27 @@ export default class App extends Component {
             context: this,
             state: 'fishes'
         })
+
+        let localStoregeRef = JSON.parse(localStorage.getItem(params.storeId))
+        console.log(localStoregeRef)
+        if (localStoregeRef) {
+           this.setState({order: localStoregeRef})
+        }
     }
+
+
+    componentDidUpdate(){
+        console.log('update')
+        localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order))
+    }
+
 
     componentWillUnmount(){
         base.removeBinding(this.ref)
     }
 
-    //CUSTOM METHOD
 
+    //CUSTOM METHOD
     //funzione di update da passare tramite props da App a AddFishForm
     addFish = (fish) =>{
         //per modificare lo stato di un componente serve:
@@ -66,8 +79,9 @@ export default class App extends Component {
     cancelItem = (key) => {
         //fare copia della stato da modificare
         let order = {...this.state.order}
+        console.log(order,order[key], key)
         //decremento il fish selezionato e verifico che una volta arrivato a 0 non vada a -1
-        order[key] = order[key] > 0 ? order[key] -1 : order[key] = 0
+        order[key] = order[key] > 0 ? order[key] -1 : key = 0
         //modificare lo stato
         this.setState({
             order: order
@@ -88,7 +102,6 @@ export default class App extends Component {
         })
     }
 
-    
 
     render() {
         return (

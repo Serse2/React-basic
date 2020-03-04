@@ -19,18 +19,21 @@ export default class Order extends Component {
 
         let fish = this.props.fishes[key];
         let numberOfFish = this.props.order[key]
-        let isAvaible = fish.status === 'available'
-            if (isAvaible){
-                return (
-                <li key={key}>
-                    <span>{numberOfFish}</span>
-                    {fish.name}
-                    <span>{formatPrice(numberOfFish * fish.price)}</span>
-                    <span onClick={() => this.props.cancelItem(key)}>X</span>
-                </li>
-                )
-            }
-            return <li key={key}>"for now this article is not available"</li>
+        let isAvaible = fish && fish.status === 'available'
+        //if there is no fish return null
+        if (!fish) return null
+        
+        if (isAvaible && numberOfFish > 0){
+            return (
+            <li key={key}>
+                <span>{numberOfFish}</span>
+                {fish.name}
+                <span>{formatPrice(numberOfFish * fish.price)}</span>
+                <span onClick={() => this.props.cancelItem(key)}>X</span>
+            </li>
+            )
+        }
+        return <li key={key}>"for now this article is not available"</li>
     }
 
 
@@ -57,8 +60,8 @@ export default class Order extends Component {
             
             let fish = this.props.fishes[key];
             let numberOfFish = this.props.order[key]
-
-            let isAvaible = fish || fish.status === 'available'
+            let isAvaible = fish && fish.status === 'available'
+            if (!fish) return null
             if (isAvaible){
                 return accumulatore + numberOfFish * fish.price
             }
