@@ -36,7 +36,6 @@ export default class App extends Component {
 
 
     componentDidUpdate(){
-        console.log('update')
         localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order))
     }
 
@@ -47,6 +46,7 @@ export default class App extends Component {
 
 
     //CUSTOM METHOD
+    
     //funzione di update da passare tramite props da App a AddFishForm
     addFish = (fish) =>{
         //per modificare lo stato di un componente serve:
@@ -61,8 +61,6 @@ export default class App extends Component {
         this.setState({
             fishes: fishes
         })
-
-        console.log('add the fish ')
     }
 
     addEditFish = (index, fish) => {
@@ -76,8 +74,7 @@ export default class App extends Component {
         this.setState({
             fishes: fishes
         })
-
-        console.log('add the fish ')
+        console.log('edit the fish')
     }
 
     //aggiungo singolo fish all'ordine
