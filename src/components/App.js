@@ -19,6 +19,9 @@ export default class App extends Component {
 
     componentDidMount(){
         let { params } = this.props.match
+        //questo this.ref è differente da quello utilizzato in React.
+        //infatti si tratta di una reference di un pezzo di dati sul database
+        //in questo caso il database resta in ascolto di tutte le modifiche per lo storeId selezionato
         this.ref = base.syncState(`${params.storeId}/fishes`, {
             context: this,
             state: 'fishes'
@@ -129,6 +132,7 @@ export default class App extends Component {
                     addFish={this.addFish}
                     loadSampleFishes={this.loadSampleFishes}
                     cancelFishes={this.cancelFishes}
+                    fishes={this.state.fishes}
                 />
             </div>
         )
