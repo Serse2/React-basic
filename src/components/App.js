@@ -65,6 +65,21 @@ export default class App extends Component {
         console.log('add the fish ')
     }
 
+    addEditFish = (index, fish) => {
+        //fare copia dello stato da modificare
+        const fishes = {...this.state.fishes}
+
+        //inserire nella variabile fishes il valore dell'oggetto fish
+        fishes[index] = fish
+
+        //modificare lo stato con setState
+        this.setState({
+            fishes: fishes
+        })
+
+        console.log('add the fish ')
+    }
+
     //aggiungo singolo fish all'ordine
     addToOrder = (key) => {
         //fare copia della stato da modificare
@@ -131,8 +146,9 @@ export default class App extends Component {
                     // passo tramite props le funzioni per renderle accessibili ai livelli di componenti più bassi
                     addFish={this.addFish}
                     loadSampleFishes={this.loadSampleFishes}
-                    cancelFishes={this.cancelFishes}
                     fishes={this.state.fishes}
+                    match={this.props.match}
+                    addEditFish={this.addEditFish}
                 />
             </div>
         )
