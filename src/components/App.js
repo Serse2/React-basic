@@ -46,7 +46,7 @@ export default class App extends Component {
 
 
     //CUSTOM METHOD
-    
+
     //funzione di update da passare tramite props da App a AddFishForm
     addFish = (fish) =>{
         //per modificare lo stato di un componente serve:
@@ -94,13 +94,14 @@ export default class App extends Component {
     cancelItem = (key) => {
         //fare copia della stato da modificare
         let order = {...this.state.order}
-        console.log(order,order[key], key)
         //decremento il fish selezionato e verifico che una volta arrivato a 0 non vada a -1
-        order[key] = order[key] > 0 ? order[key] -1 : key = 0
+        order[key] = null
         //modificare lo stato
         this.setState({
             order: order
         })
+
+        console.log('delited')
     }
 
     //caricamento fishes già presenti 
@@ -113,7 +114,17 @@ export default class App extends Component {
     //cancelliamo i fishes gia presenti
     cancelFishes = () => {
         this.setState({
-            fishes: {}
+            fishes: null
+        })
+    }
+
+    cancelOneFish = (index) =>{
+        console.log(index)
+        let fishes = {...this.state.fishes}
+        fishes[index] = null
+        console.log(fishes)
+        this.setState({
+            fishes: fishes
         })
     }
 
@@ -143,9 +154,11 @@ export default class App extends Component {
                     // passo tramite props le funzioni per renderle accessibili ai livelli di componenti più bassi
                     addFish={this.addFish}
                     loadSampleFishes={this.loadSampleFishes}
+                    cancelFishes={this.cancelFishes}
                     fishes={this.state.fishes}
                     match={this.props.match}
                     addEditFish={this.addEditFish}
+                    cancelOneFish={this.cancelOneFish}
                 />
             </div>
         )

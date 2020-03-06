@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 export default class EditFishForm extends Component {
 
+
+    //Edit fish
     handleEdit = (e) => {
         //index passato dal componente inventory (es. fish1)
         let index = this.props.index
@@ -19,9 +21,8 @@ export default class EditFishForm extends Component {
 
         //richiama la funzione per la modifica dello stato, che dovrà salire di due livelli per raggiungere App (il componente nel quale vi è lo state)
         this.props.addEditFish(index, fish)
-        
-
     }
+
 
     render() {
         let { name, price, status, desc, image } = this.props.details
@@ -35,6 +36,7 @@ export default class EditFishForm extends Component {
                 </select>
                 <textarea name="desc" type="text" defaultValue={desc} onChange={this.handleEdit}></textarea>
                 <input name="image" type="text" defaultValue={image} onChange={this.handleEdit}></input>
+                <button onClick={() => this.props.cancelOneFish(this.props.index)}>Delite fish</button>
             </form>
 
         )

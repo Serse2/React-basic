@@ -22,14 +22,11 @@ export default class Order extends Component {
         let isAvaible = fish && fish.status === 'available'
         //if there is no fish return null
         if (!fish) return null
-        
         if (isAvaible && numberOfFish > 0){
             return (
             <li key={key}>
-                <span>{numberOfFish}</span>
-                {fish.name}
-                <span>{formatPrice(numberOfFish * fish.price)}</span>
-                <span onClick={() => this.props.cancelItem(key)}>X</span>
+                {numberOfFish} lbs {fish.name}{formatPrice(numberOfFish * fish.price)}
+                <button onClick={() => this.props.cancelItem(key)}>&times;</button>
             </li>
             )
         }

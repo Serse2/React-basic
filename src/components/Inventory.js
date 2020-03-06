@@ -14,6 +14,7 @@ export default class Inventory extends Component {
                         details={this.props.fishes[key]}
                         match={this.props.match}
                         addEditFish={this.props.addEditFish}
+                        cancelOneFish={this.props.cancelOneFish}
                     />
                 ))}
                 <AddFishForm  addFish={this.props.addFish}/>
