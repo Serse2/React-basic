@@ -6,6 +6,7 @@ import Plate from './Plate'
 import sampleFishes from '../sample-fishes'
 import base from '../base'
 
+
 export default class App extends Component {
     // the state
     state = {
@@ -95,7 +96,7 @@ export default class App extends Component {
         //fare copia della stato da modificare
         let order = {...this.state.order}
         //decremento il fish selezionato e verifico che una volta arrivato a 0 non vada a -1
-        order[key] = null
+        delete order[key]
         //modificare lo stato
         this.setState({
             order: order
