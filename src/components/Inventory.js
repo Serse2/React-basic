@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import AddFishForm from './AddFishForm';
 import EditFishForm from './EditFishForm';
+import LogIn from './LogIn'
 
 export default class Inventory extends Component {
+
+
+    authenticate(provider){
+        console.log(provider)
+    }
+
     render() {
+        return(
+            <div>
+                <h1>Inventory</h1>
+                <LogIn 
+                    authenticate={this.authenticate}
+                />  
+            </div>                
+        )
         return (
             <div className="inventory">
                 Inventory
