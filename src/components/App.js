@@ -101,8 +101,6 @@ export default class App extends Component {
         this.setState({
             order: order
         })
-
-        console.log('delited')
     }
 
     //caricamento fishes già presenti 
@@ -131,6 +129,9 @@ export default class App extends Component {
 
 
     render() {
+
+        const {storeId} = this.props.match.params
+
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
@@ -160,6 +161,7 @@ export default class App extends Component {
                     match={this.props.match}
                     addEditFish={this.addEditFish}
                     cancelOneFish={this.cancelOneFish}
+                    storeId={storeId}
                 />
             </div>
         )

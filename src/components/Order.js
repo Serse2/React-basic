@@ -53,7 +53,7 @@ export default class Order extends Component {
                 <StripeCheckout 
                     stripeKey="pk_test_s9yc6rH7cWDhFDCvL3nlAM9z00cc86OUMp"
                     token={this.handleToken}
-                    amount={formatPrice(total)}
+                    // amount={formatPrice(total)}
                     billingAddress
                     shippingAddress
                 />
