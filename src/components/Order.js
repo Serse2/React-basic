@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { formatPrice } from '../helpers'
-import StripeCheckout from 'react-stripe-checkout';
 
 export default class Order extends Component {
     renderOrder = (key) =>{
@@ -19,10 +18,6 @@ export default class Order extends Component {
             )
         }
         return <li key={key}>"for now this article is not available"</li>
-    }
-
-    handleToken = (token, adresses) =>{
-        console.log(token, adresses)
     }
 
     render() {
@@ -50,13 +45,6 @@ export default class Order extends Component {
                 <div className="total">
                     Total: <strong>{formatPrice(total)}</strong>
                 </div>
-                <StripeCheckout 
-                    stripeKey="pk_test_s9yc6rH7cWDhFDCvL3nlAM9z00cc86OUMp"
-                    token={this.handleToken}
-                    // amount={formatPrice(total)}
-                    billingAddress
-                    shippingAddress
-                />
             </div>
         )
     }

@@ -3,55 +3,94 @@ import firebase from 'firebase'
 import AddFishForm from './AddFishForm';
 import EditFishForm from './EditFishForm';
 import LogIn from './LogIn'
-import { firebaseApp } from '../base'
-import base from '../base'
+import base, { firebaseApp } from '../base'
+// import base from '../base'
 
-export default class Inventory extends Component {
+class Inventory extends Component {
+    
+    state = {
+        uid: null,
+        owner: null
+    }
 
-
-    // authHendler = async (authData) => {
-    //     //selezionare i dati dal db del solo ID di catch of the day (http://localhost:3000/store/fancy-helpless-syllabuses)
-    //     const data = await base.fetch(this.props.storeId, {context: this})
-    //     console.log(authData)
-    //     console.log(data)
-
-    // }
-
-    authenticate(provider){
-        //creare un provider dinamico in base al bottone premuto
-        var providerAuth = new firebase.auth[`${provider}AuthProvider`]()
-        
-        firebaseApp.auth().signInWithPopup(providerAuth).then(function(result) {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var token = result.credential.accessToken;
-            console.log(result)
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-          }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
+    //se siamo già loggati e viere ricaricata la pagina verificare se l'utente è ancora loggato,
+    //se si richiamare authHandler che setterà come state.uid il uid passato come parametro in {user}
+    componentDidMount(){
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.authHandler({user})
+            }
           });
     }
 
+    
+    authHandler = async (authData) =>{
+        console.log(authData)
+        //recuperare solo la porzione del db con id del menù
+        const store =  await base.fetch(this.props.storeId, { context: this })
+        console.log(store)
+
+        console.log(authData.user.uid)
+        //Reclamare la proprietà nel caso in cui non ci sia proprietario
+        if (!store.owner){
+            base.post(`${this.props.storeId}/owner`, {
+                data: authData.user.uid
+            })
+        }
+        // 3. Set the state of the inventory component to reflect the current user
+        this.setState({
+            uid: authData.user.uid,
+            owner: store.owner || authData.user.uid
+        })
+    }
+
+    authenticate = (provider) =>{
+        //creare un provider dinamico in base al bottone premuto
+        console.log(this)
+        const authProvider = new firebase.auth[`${provider}AuthProvider`]();
+        firebaseApp
+            .auth()
+            .signInWithPopup(authProvider)
+            .then(this.authHandler)
+    }
+
+    
+
+    // logout
+
+    logout = async () =>{
+        console.log('logout')
+        await firebase.auth().signOut()
+        this.setState({
+            uid: null
+        })
+    }
+
     render() {
-        return(
-            <div>
-                <h1>Inventory</h1>
-                <LogIn 
-                    authenticate={this.authenticate}
-                />  
-            </div>                
-        )
+
+        //creo un componentino per il logout
+
+        const Logout = <button onClick={this.logout}>LogOut</button>
+
+
+        if (!this.state.uid){
+            return <LogIn authenticate={this.authenticate} />
+        }
+         
+        if(this.state.uid !== this.state.owner){
+            return(
+                <div>
+                    <h2>Sorry you aren't the owner</h2>
+                    {Logout}
+                </div>
+            )
+        }
+
         return (
             <div className="inventory">
-                Inventory
+                
+                <h1>Inventory</h1>
+                {Logout}
                 {Object.keys(this.props.fishes).map(key => (
                     <EditFishForm 
                         key={key}
@@ -69,3 +108,5 @@ export default class Inventory extends Component {
         )
     }
 }
+
+export default Inventory
